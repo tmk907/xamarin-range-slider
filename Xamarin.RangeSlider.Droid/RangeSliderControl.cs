@@ -255,6 +255,10 @@ namespace Xamarin.RangeSlider
         public int ThumbShadowXOffset { get; set; }
         public int ThumbShadowYOffset { get; set; }
 
+        public Thumb PrimaryThumb { get; set; }
+
+        public bool UseSingleThumb { get; set; }
+
         /// <summary>
         ///     Should the widget notify the listener callback while the user is still dragging a thumb? Default is false.
         /// </summary>
@@ -331,6 +335,9 @@ namespace Xamarin.RangeSlider
                     AlwaysActive = a.GetBoolean(Resource.Styleable.RangeSliderControl_alwaysActive, false);
                     StepValue = ExtractNumericValueFromAttributes(a, Resource.Styleable.RangeSliderControl_stepValue, DefaultStepValue);
                     StepValueContinuously = a.GetBoolean(Resource.Styleable.RangeSliderControl_stepValueContinuously, false);
+
+                    PrimaryThumb = Thumb.Upper;
+                    UseSingleThumb = false;
 
                     var normalDrawable = a.GetDrawable(Resource.Styleable.RangeSliderControl_thumbNormal);
                     if (normalDrawable != null)
@@ -629,7 +636,7 @@ namespace Xamarin.RangeSlider
                     _downMotionX = ev.GetX(pointerIndex);
 
                     _pressedThumb = EvalPressedThumb(_downMotionX);
-
+                    
                     // Only handle thumb presses.
                     if (_pressedThumb == null)
                     {
@@ -993,6 +1000,8 @@ namespace Xamarin.RangeSlider
         /// <returns>The pressed thumb or null if none has been touched.</returns>
         private Thumb? EvalPressedThumb(float touchX)
         {
+            if (UseSingleThumb)
+                return PrimaryThumb;
             Thumb? result = null;
             var minThumbPressed = IsInThumbRange(touchX, NormalizedMinValue);
             var maxThumbPressed = IsInThumbRange(touchX, NormalizedMaxValue);

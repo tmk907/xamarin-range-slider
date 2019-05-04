@@ -62,6 +62,12 @@ namespace Xamarin.RangeSlider.Forms
         public static readonly BindableProperty MaterialUiProperty =
             BindableProperty.Create(nameof(MaterialUI), typeof(bool), typeof(RangeSlider), false);
 
+        public static readonly BindableProperty PrimaryThumbProperty =
+            BindableProperty.Create(nameof(PrimaryThumb), typeof(Thumb), typeof(RangeSlider), Thumb.Upper);
+
+        public static readonly BindableProperty UseSingleThumbProperty =
+            BindableProperty.Create(nameof(UseSingleThumb), typeof(bool), typeof(RangeSlider), false);
+
         public float MinimumValue
         {
             get => (float)GetValue(MinimumValueProperty);
@@ -163,6 +169,18 @@ namespace Xamarin.RangeSlider.Forms
         {
             get => (bool)GetValue(MaterialUiProperty);
             set => SetValue(MaterialUiProperty, value);
+        }
+
+        public Thumb PrimaryThumb
+        {
+            get => (Thumb)GetValue(PrimaryThumbProperty);
+            set => SetValue(PrimaryThumbProperty, value);
+        }
+
+        public bool UseSingleThumb
+        {
+            get => (bool)GetValue(UseSingleThumbProperty);
+            set => SetValue(UseSingleThumbProperty, value);
         }
 
         public Func<Thumb, float, string> FormatLabel

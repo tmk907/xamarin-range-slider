@@ -70,6 +70,8 @@ namespace Xamarin.RangeSlider.Forms
             if (element.ActiveColor != Xamarin.Forms.Color.Default)
                 control.ActiveColor = element.ActiveColor.ToAndroid();
             control.MaterialUI = element.MaterialUI;
+            control.PrimaryThumb = element.PrimaryThumb;
+            control.UseSingleThumb = element.UseSingleThumb;
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -147,6 +149,14 @@ namespace Xamarin.RangeSlider.Forms
             else if (e.PropertyName == RangeSlider.MaxThumbTextHiddenProperty.PropertyName)
             {
                 Control.MaxThumbTextHidden = Element.MaxThumbTextHidden;
+            }
+            else if (e.PropertyName == RangeSlider.PrimaryThumbProperty.PropertyName)
+            {
+                Control.PrimaryThumb = Element.PrimaryThumb;
+            }
+            else if(e.PropertyName == RangeSlider.UseSingleThumbProperty.PropertyName)
+            {
+                Control.UseSingleThumb = Element.UseSingleThumb;
             }
         }
 
