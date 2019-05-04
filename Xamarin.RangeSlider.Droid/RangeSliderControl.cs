@@ -1012,6 +1012,8 @@ namespace Xamarin.RangeSlider
                 result = Thumb.Lower;
             else if (maxThumbPressed)
                 result = Thumb.Upper;
+            else
+                result = GetClosestThumb(touchX);
             return result;
         }
 
@@ -1025,6 +1027,25 @@ namespace Xamarin.RangeSlider
         private bool IsInThumbRange(float touchX, float normalizedThumbValue)
         {
             return Math.Abs(touchX - NormalizedToScreen(normalizedThumbValue)) <= _thumbHalfWidth;
+        }
+
+        private Thumb GetClosestThumb(float touchX)
+        {
+            if (IsBeforeMinThumb(touchX)) return Thumb.Lower;
+            if (IsAfterMaxThumb(touchX)) return Thumb.Upper;
+
+            var middle = (NormalizedToScreen(NormalizedMinValue) + NormalizedToScreen(NormalizedMaxValue)) / 2f;
+            return touchX < middle ? Thumb.Lower : Thumb.Upper;
+        }
+
+        private bool IsAfterMaxThumb(float touchX)
+        {
+            return touchX > NormalizedToScreen(NormalizedMaxValue);
+        }
+
+        private bool IsBeforeMinThumb(float touchX)
+        {
+            return touchX < NormalizedToScreen(NormalizedMinValue);
         }
 
         /// <summary>
